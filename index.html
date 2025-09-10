@@ -5,35 +5,48 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hey Dad!</title>
   <style>
-    /* --- Page layout --- */
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
+    /* --- Layout & background --- */
+    html, body { height: 100%; margin: 0; }
     body {
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      /* Navy -> purple -> pink ombré */
       background: linear-gradient(180deg, #001a44 0%, #241d67 55%, #5a2a86 80%, #ff66b3 110%);
-      font-family: "Gill Sans MT", "Gill Sans", Calibri, "Trebuchet MS", sans-serif;
+      font-family: "Gill Sans MT","Gill Sans",Calibri,"Trebuchet MS",sans-serif;
       color: #fff;
     }
 
-    /* --- The headline --- */
+    /* --- Text --- */
     h1 {
-      position: relative;
-      z-index: 3;           /* above the SVG starfield/planet */
-      font-weight: 700;
-      font-size: 2.2rem;    /* slightly smaller than before */
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.45);
       margin: 0;
+      font-weight: 700;
+      font-size: 2.2rem;       /* “slightly smaller” */
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.45);
       user-select: none;
+      z-index: 3;
     }
 
-    /* --- Fullscreen SVG sits behind the text --- */
+    /* Orbit-on-load: the wrapper is the center point; the text flies a circle then lands */
+    .orbit {
+      position: relative;
+      width: 0; height: 0;     /* anchor point dead-center (because body is flex-centered) */
+      z-index: 3;
+    }
+    .orbit h1 {
+      position: absolute;
+      left: 0; top: 0;
+      transform-origin: 0 0;   /* rotate around the center point */
+      animation: circle-in 4.2s ease-out forwards;
+    }
+    @keyframes circle-in {
+      0%   { transform: rotate(0deg)   translateX(140px) rotate(0deg);   opacity: 0; }
+      10%  { opacity: 1; }
+      100% { transform: rotate(360deg) translateX(0px)   rotate(-360deg); opacity: 1; }
+    }
+
+    /* --- Fullscreen SVG starfield behind text --- */
     .sky {
       position: fixed;
       inset: 0;
@@ -41,29 +54,27 @@
       pointer-events: none;
     }
 
-    /* Twinkle animation for stars */
-    .twinkle {
-      animation: twinkle 4s ease-in-out infinite;
-    }
-    .twinkle:nth-child(odd)  { animation-duration: 5.5s; }
-    .twinkle:nth-child(3n)   { animation-duration: 7s;   }
-    .twinkle:nth-child(5n)   { animation-duration: 6.2s; }
+    /* twinkle + parallax drift */
+    .twinkle                   { animation: twinkle 4.5s ease-in-out infinite; }
+    .twinkle:nth-child(odd)    { animation-duration: 6s; }
+    .twinkle:nth-child(3n)     { animation-duration: 7.2s; }
+    .twinkle:nth-child(5n)     { animation-duration: 5.6s; }
+    .glow { filter: drop-shadow(0 0 6px rgba(255,255,255,.65)); }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.85; }
-      50%      { opacity: 0.35; }
-    }
+    /* Slow drifting layers for motion */
+    .layer1 { animation: drift1 60s linear infinite; }
+    .layer2 { animation: drift2 90s linear infinite; opacity: .8; }
 
-    /* A soft glow around bigger stars */
-    .glow { filter: drop-shadow(0 0 6px rgba(255,255,255,0.65)); }
+    @keyframes twinkle { 0%,100% {opacity:.85} 50% {opacity:.35} }
+    @keyframes drift1  { from { transform: translate(0,0) } to { transform: translate(-8%, -5%) } }
+    @keyframes drift2  { from { transform: translate(0,0) } to { transform: translate( 6%,  4%) } }
   </style>
 </head>
 <body>
 
-  <!-- Background stars + planet (pure inline SVG) -->
+  <!-- Moving starfield + small planet (pure SVG) -->
   <svg class="sky" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
     <defs>
-      <!-- Planet gradient -->
       <radialGradient id="planetGradient" cx="30%" cy="30%" r="70%">
         <stop offset="0%"  stop-color="#ffe7a8"/>
         <stop offset="40%" stop-color="#f6a77b"/>
@@ -72,65 +83,90 @@
       </radialGradient>
     </defs>
 
-    <!-- Starfield: small circles at percentage positions -->
-    <!-- You can add/remove stars by copying a <circle> line and changing cx/cy/r -->
-    <g fill="#fff">
-      <!-- layer 1 -->
+    <!-- layer 1 stars -->
+    <g class="layer1" fill="#fff">
       <circle class="twinkle" cx="6"  cy="12" r="0.35"/>
       <circle class="twinkle" cx="18" cy="7"  r="0.25"/>
-      <circle class="twinkle" cx="28" cy="16" r="0.4"/>
+      <circle class="twinkle" cx="28" cy="16" r="0.40"/>
       <circle class="twinkle" cx="39" cy="9"  r="0.28"/>
-      <circle class="twinkle" cx="51" cy="6"  r="0.3"/>
+      <circle class="twinkle" cx="51" cy="6"  r="0.30"/>
       <circle class="twinkle" cx="63" cy="12" r="0.34"/>
       <circle class="twinkle" cx="73" cy="5"  r="0.26"/>
       <circle class="twinkle" cx="86" cy="11" r="0.35"/>
 
-      <!-- layer 2 -->
-      <circle class="twinkle" cx="10" cy="32" r="0.3"/>
+      <circle class="twinkle" cx="10" cy="32" r="0.30"/>
       <circle class="twinkle" cx="22" cy="27" r="0.22"/>
       <circle class="twinkle" cx="33" cy="35" r="0.33"/>
       <circle class="twinkle" cx="45" cy="29" r="0.24"/>
       <circle class="twinkle" cx="56" cy="33" r="0.28"/>
       <circle class="twinkle" cx="68" cy="26" r="0.22"/>
-      <circle class="twinkle" cx="80" cy="31" r="0.3"/>
+      <circle class="twinkle" cx="80" cy="31" r="0.30"/>
       <circle class="twinkle" cx="92" cy="28" r="0.24"/>
 
-      <!-- layer 3 -->
       <circle class="twinkle" cx="7"  cy="58" r="0.34"/>
       <circle class="twinkle" cx="18" cy="52" r="0.22"/>
-      <circle class="twinkle" cx="29" cy="63" r="0.38" class="glow"/>
+      <circle class="twinkle glow" cx="29" cy="63" r="0.38"/>
       <circle class="twinkle" cx="41" cy="55" r="0.26"/>
       <circle class="twinkle" cx="53" cy="61" r="0.29"/>
       <circle class="twinkle" cx="66" cy="56" r="0.22"/>
       <circle class="twinkle" cx="78" cy="60" r="0.34"/>
       <circle class="twinkle" cx="90" cy="54" r="0.24"/>
 
-      <!-- layer 4 -->
       <circle class="twinkle" cx="11" cy="82" r="0.24"/>
-      <circle class="twinkle" cx="23" cy="76" r="0.32" class="glow"/>
+      <circle class="twinkle glow" cx="23" cy="76" r="0.32"/>
       <circle class="twinkle" cx="34" cy="88" r="0.26"/>
       <circle class="twinkle" cx="46" cy="79" r="0.22"/>
-      <circle class="twinkle" cx="58" cy="86" r="0.3"/>
+      <circle class="twinkle" cx="58" cy="86" r="0.30"/>
       <circle class="twinkle" cx="70" cy="78" r="0.24"/>
       <circle class="twinkle" cx="82" cy="90" r="0.26"/>
       <circle class="twinkle" cx="94" cy="81" r="0.22"/>
     </g>
 
-    <!-- Small planet (top-right-ish) -->
-    <g transform="translate(73 26) scale(1)">
-      <!-- ring -->
-      <ellipse cx="0" cy="1.3" rx="6" ry="1.6"
-               fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="0.25"/>
-      <ellipse cx="0" cy="1.3" rx="6" ry="1.6"
-               fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="0.6" />
+    <!-- layer 2 stars (parallax, different drift) -->
+    <g class="layer2" fill="#fff">
+      <circle class="twinkle" cx="3"  cy="8"  r="0.22"/>
+      <circle class="twinkle" cx="15" cy="18" r="0.26"/>
+      <circle class="twinkle" cx="27" cy="10" r="0.22"/>
+      <circle class="twinkle" cx="37" cy="20" r="0.20"/>
+      <circle class="twinkle" cx="49" cy="14" r="0.24"/>
+      <circle class="twinkle" cx="61" cy="18" r="0.22"/>
+      <circle class="twinkle" cx="72" cy="12" r="0.20"/>
+      <circle class="twinkle" cx="88" cy="16" r="0.24"/>
 
-      <!-- planet body -->
+      <circle class="twinkle" cx="5"  cy="44" r="0.20"/>
+      <circle class="twinkle" cx="17" cy="39" r="0.24"/>
+      <circle class="twinkle" cx="31" cy="47" r="0.22"/>
+      <circle class="twinkle" cx="43" cy="41" r="0.26"/>
+      <circle class="twinkle" cx="55" cy="48" r="0.22"/>
+      <circle class="twinkle" cx="67" cy="42" r="0.20"/>
+      <circle class="twinkle" cx="79" cy="46" r="0.24"/>
+      <circle class="twinkle" cx="93" cy="40" r="0.22"/>
+
+      <circle class="twinkle" cx="8"  cy="70" r="0.22"/>
+      <circle class="twinkle" cx="21" cy="66" r="0.24"/>
+      <circle class="twinkle" cx="33" cy="73" r="0.20"/>
+      <circle class="twinkle" cx="47" cy="68" r="0.22"/>
+      <circle class="twinkle" cx="59" cy="72" r="0.24"/>
+      <circle class="twinkle" cx="71" cy="67" r="0.22"/>
+      <circle class="twinkle" cx="83" cy="74" r="0.20"/>
+      <circle class="twinkle" cx="96" cy="68" r="0.22"/>
+    </g>
+
+    <!-- Small planet -->
+    <g transform="translate(73 26) scale(1)">
+      <ellipse cx="0" cy="1.3" rx="6" ry="1.6"
+               fill="none" stroke="rgba(255,255,255,.6)" stroke-width="0.25"/>
+      <ellipse cx="0" cy="1.3" rx="6" ry="1.6"
+               fill="none" stroke="rgba(255,255,255,.25)" stroke-width="0.6"/>
       <circle r="3.2" fill="url(#planetGradient)" class="glow"/>
-      <!-- subtle highlight -->
-      <circle r="2.5" fill="url(#planetGradient)" opacity="0.3" transform="translate(-0.6,-0.6)"/>
+      <circle r="2.5" fill="url(#planetGradient)" opacity=".3" transform="translate(-.6,-.6)"/>
     </g>
   </svg>
 
-  <h1>Hey Dad!</h1>
+  <!-- Orbiting headline (one loop then lands centered) -->
+  <div class="orbit">
+    <h1>Hey Dad!</h1>
+  </div>
 </body>
 </html>
+
