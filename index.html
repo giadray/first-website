@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hey Dad!</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: navy;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 3rem;
+      overflow: hidden;
+    }
+
+    h1 {
+      z-index: 2;
+    }
+
+    /* Star background */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+      z-index: 1;
+      animation: twinkle 10s linear infinite;
+    }
+
+    @keyframes twinkle {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <h1>Hey Dad!</h1>
+</body>
+</html>
