@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your allergies and preferences — PlateSafe</title>
+<meta name="description" content="Set up your allergy and dietary profile once, and PlateSafe applies it automatically every time you search.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #FAF6EE;
+    --cream-2: #F1E9D8;
+    --forest: #1F3B34;
+    --forest-2: #16241F;
+    --sage: #7E9884;
+    --sage-tint: #E4EAE1;
+    --coral: #E0603F;
+    --coral-dark: #C24C31;
+    --line: rgba(22,36,31,0.12);
+    --max: 1120px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0; background: var(--cream); color: var(--forest-2);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.5;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color: inherit; }
+  .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+  h1,h2,h3{ font-family: 'Fraunces', serif; font-weight: 600; letter-spacing: -0.01em; margin: 0; color: var(--forest); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--forest); opacity: 0.72; }
+  .eyebrow::before{ content:""; width:6px; height:6px; border-radius:50%; background: var(--coral); flex-shrink:0; }
+
+  header{ position: sticky; top:0; z-index: 20; background: rgba(250,246,238,0.86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; padding-top: 18px; padding-bottom: 18px; }
+  .logo{ font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; color: var(--forest); display:flex; align-items:center; gap:9px; text-decoration:none; }
+  .logo .mark{ width:22px; height:22px; }
+  .btn{ display:inline-flex; align-items:center; justify-content:center; padding: 12px 22px; border-radius: 100px; font-family:'Inter', sans-serif; font-weight: 600; font-size: 14.5px; text-decoration:none; border: 1.5px solid transparent; cursor:pointer; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+  .btn-primary{ background: var(--coral); color: #FFF8F2; box-shadow: 0 1px 0 rgba(0,0,0,0.05); }
+  .btn-primary:hover{ background: var(--coral-dark); transform: translateY(-1px); }
+  .btn-ghost{ border-color: var(--line); color: var(--forest); background: transparent; padding: 10px 20px; }
+  .btn-ghost:hover{ border-color: var(--forest); }
+  .btn-sm{ padding: 9px 16px; font-size: 13.5px; }
+
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size: 14px; font-weight:600; color: rgba(22,36,31,0.6); text-decoration:none; margin-bottom: 26px; }
+  .back-link:hover{ color: var(--forest); }
+
+  .detail-hero{ padding: 52px 0 20px; max-width: 720px; }
+  .detail-hero .dicon{ width: 56px; height:56px; border-radius: 16px; background: var(--forest); display:flex; align-items:center; justify-content:center; margin-bottom: 22px; }
+  .detail-hero .dicon svg{ width:28px; height:28px; }
+  .detail-hero h1{ font-size: clamp(32px, 4.4vw, 46px); line-height:1.08; margin-top: 14px; }
+  .detail-hero p.lead{ font-size: 18px; color: rgba(22,36,31,0.72); margin: 20px 0 0; max-width: 600px; }
+
+  section{ padding: 40px 0; }
+  .detail-body{ max-width: 680px; }
+  .detail-body p{ font-size: 16.5px; color: rgba(22,36,31,0.75); margin: 0 0 18px; }
+
+  .points{ display:grid; gap:14px; margin: 32px 0 0; max-width: 680px; }
+  .point{ display:flex; gap:14px; align-items:flex-start; background: var(--cream-2); border-radius: 14px; padding: 18px 20px; }
+  .point .pdot{ flex-shrink:0; width: 22px; height:22px; border-radius:50%; background: var(--forest); display:flex; align-items:center; justify-content:center; margin-top:2px; }
+  .point .pdot svg{ width:12px; height:12px; }
+  .point p{ margin:0; font-size: 15px; color: rgba(22,36,31,0.78); }
+
+  .status-note{ display:inline-flex; align-items:center; gap:8px; font-size: 13.5px; font-weight:600; color: var(--forest); background: var(--sage-tint); padding: 9px 16px; border-radius: 100px; margin-top: 32px; }
+
+  form.signup{ display:flex; gap: 10px; max-width: 440px; flex-wrap: wrap; }
+  .field{ flex:1; min-width: 220px; display:flex; align-items:center; background: #fff; border: 1.5px solid var(--line); border-radius: 100px; padding: 4px 4px 4px 20px; transition: border-color .15s ease; }
+  .field:focus-within{ border-color: var(--forest); }
+  .field input{ border:0; outline:0; background:transparent; font-family:'Inter'; font-size: 14.5px; padding: 10px 4px; width:100%; color: var(--forest-2); }
+  .field input::placeholder{ color: rgba(22,36,31,0.4); }
+  .microcopy{ font-size: 13px; color: rgba(22,36,31,0.55); margin-top: 12px; }
+
+  .success-state{ display:none; flex-direction: column; align-items:center; gap: 12px; }
+  .success-state.show{ display:flex; animation: successIn .4s ease both; }
+  @keyframes successIn{ 0%{ opacity:0; transform: translateY(6px); } 100%{ opacity:1; transform: translateY(0); } }
+  .signup-block{ transition: opacity .2s ease; }
+  .signup-block.hiding{ opacity:0; }
+  .tick-circle{ stroke-dasharray: 170; stroke-dashoffset: 170; }
+  .tick-check{ stroke-dasharray: 40; stroke-dashoffset: 40; }
+  .success-state.show .tick-circle{ animation: drawStroke .5s ease forwards .05s; }
+  .success-state.show .tick-check{ animation: drawStroke .35s ease forwards .5s; }
+  @keyframes drawStroke{ to{ stroke-dashoffset: 0; } }
+  .success-text strong{ display:block; font-family:'Fraunces', serif; font-size: 18px; color: var(--forest); font-weight:600; }
+  .success-text span{ font-size: 14px; color: rgba(22,36,31,0.62); }
+  @media (prefers-reduced-motion: reduce){
+    .success-state.show, .success-state.show .tick-circle, .success-state.show .tick-check{ animation: none; }
+    .tick-circle, .tick-check{ stroke-dashoffset: 0; }
+  }
+
+  .cta-final{ text-align:center; background: var(--cream-2); border-radius: 28px; padding: 60px 28px; margin-top: 24px; }
+  .cta-final h2{ font-size: clamp(26px,3.6vw,36px); }
+  .cta-final p{ color: rgba(22,36,31,0.68); font-size: 16px; margin: 12px auto 26px; max-width: 440px; }
+  .cta-final form.signup{ margin: 0 auto; justify-content:center; }
+
+  footer{ border-top: 1px solid var(--line); padding: 34px 0; }
+  footer .wrap{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+  footer .flinks{ display:flex; gap:20px; font-size: 13.5px; color: rgba(22,36,31,0.6); text-decoration:none; }
+  footer .flinks a{ text-decoration:none; }
+  footer .flinks a:hover{ color: var(--forest); }
+  footer .fcopy{ font-size: 13.5px; color: rgba(22,36,31,0.5); }
+
+  @media (max-width: 880px){
+    section{ padding: 30px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a class="logo" href="index.html">
+      <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#1F3B34" stroke-width="1.6"/><path d="M7 12.5l3 3 7-7" stroke="#E0603F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      PlateSafe
+    </a>
+    <a class="btn btn-ghost btn-sm" href="#signup">Join the waitlist</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Back to homepage</a>
+
+    <div class="detail-hero">
+      <div class="dicon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4.5 6 4c2-.3 3.6.6 4.5 2 .9-1.4 2.5-2.3 4.5-2 3.5.5 5 4 3.5 8-2.5 4.5-6.5 9-6.5 9z" stroke="#FAF6EE" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 10l1.6 1.6L15 8" stroke="#E0603F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <span class="eyebrow">Personalised for you</span>
+      <h1>Your allergies and preferences, set once.</h1>
+      <p class="lead">Tell PlateSafe what matters to you, and every listing you see reflects it — automatically, before you've even started searching.</p>
+    </div>
+  </div>
+
+  <section class="wrap">
+    <div class="detail-body">
+      <p>Everyone's risk looks different — a mild intolerance isn't the same as an allergy that needs an EpiPen nearby. PlateSafe lets you set up a real profile instead of relying on a generic "gluten-free" filter that doesn't capture how serious things actually are.</p>
+<p>Once it's set, it's applied automatically every time you search — no more re-explaining your allergies to a new server every single visit.</p>
+      <div class="points">
+        
+<div class="point"><div class="pdot"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="#FAF6EE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>List exact allergens and intolerances, not just broad categories — peanuts and tree nuts are flagged separately, for example.</p></div>
+<div class="point"><div class="pdot"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="#FAF6EE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>Set a severity level for each one, so a listing's warnings match how serious a reaction would actually be for you.</p></div>
+<div class="point"><div class="pdot"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="#FAF6EE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>Save preferences for the whole household — useful if you're managing allergies for kids or family members too.</p></div>
+
+      </div>
+      <span class="status-note">🛠️ This feature is in development — join the waitlist to help shape it</span>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="cta-final" id="signup">
+      <span class="eyebrow">Be first to know</span>
+      <h2>Help shape a safer way to eat out.</h2>
+      <p>Join the waitlist and we'll bring PlateSafe to your city as soon as we're ready to launch there.</p>
+      <div class="signup-block">
+        <form class="signup" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="waitlist">
+          <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+          <div class="field">
+            <input type="email" name="email" placeholder="you@email.com" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Join the waitlist</button>
+        </form>
+        <p class="microcopy">No spam. Just a heads-up when we launch in your area.</p>
+      </div>
+      <div class="success-state" aria-live="polite">
+        <svg class="tick-icon" viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="27" fill="none" stroke="var(--coral)" stroke-width="3" class="tick-circle"/>
+          <path d="M18 31l8 8 16-18" fill="none" stroke="var(--coral)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="tick-check"/>
+        </svg>
+        <div class="success-text">
+          <strong>You're on the list!</strong>
+          <span>We'll email you the moment PlateSafe opens up.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="fcopy">© <span id="year"></span> PlateSafe Pty Ltd</span>
+    <nav class="flinks">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </nav>
+  </div>
+</footer>
+
+<form name="waitlist" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="email" name="email" />
+  <input name="bot-field" />
+</form>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function encodeForm(data) {
+    return Object.keys(data)
+      .map(function(key){ return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]); })
+      .join("&");
+  }
+
+  document.querySelectorAll('form.signup').forEach(function(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var container = form.closest('.signup-block') || form.parentElement;
+      var successEl = container.parentElement.querySelector('.success-state');
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalLabel = submitBtn.textContent;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Joining…';
+
+      var formData = new FormData(form);
+      var payload = {};
+      formData.forEach(function(value, key){ payload[key] = value; });
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encodeForm(payload)
+      })
+        .then(function(response){
+          if (!response.ok) throw new Error('Network error');
+          form.reset();
+          container.classList.add('hiding');
+          setTimeout(function(){
+            container.style.display = 'none';
+            if (successEl) successEl.classList.add('show');
+          }, 200);
+        })
+        .catch(function(){
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+          alert('Something went wrong sending that — please try again.');
+        });
+    });
+  });
+</script>
+
+</body>
+</html>
