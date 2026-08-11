@@ -42,12 +42,16 @@
     .btn:disabled{opacity:.6; cursor:not-allowed}
     .link{color:var(--brand); font-weight:600}
     .notice{font-size:13px; color:#5a6b79}
+    .error-msg{font-size:13px; color:#c0392b; display:none}
+    .error-msg.show{display:block}
     .success{
       display:none; text-align:center; padding:36px 12px;
     }
     .success.show{display:block}
     .fade-out{animation:fade .35s ease forwards}
     @keyframes fade{to{opacity:0; transform:translateY(-6px); pointer-events:none}}
+    /* honeypot field - hidden from real users, catches bots */
+    .hp-field{position:absolute; left:-9999px; top:-9999px;}
   </style>
 </head>
 <body>
@@ -64,9 +68,15 @@
 
     <div class="card" id="card">
       <h1>Join the waitlist</h1>
-      <p class="lead">Tell us a bit about you and we’ll keep you posted as PlateSafe rolls out.</p>
+      <p class="lead">Tell us a bit about you and we'll keep you posted as PlateSafe rolls out.</p>
 
-      <form id="f">
+      <!-- name="waitlist-details" must be unique from any other form on the site (the homepage uses "waitlist") -->
+      <form id="f" name="waitlist-details" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="waitlist-details" />
+        <p class="hp-field" aria-hidden="true">
+          <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
         <div class="row">
           <div>
             <label for="name">Full name</label>
@@ -103,8 +113,9 @@
 
         <div class="actions">
           <button class="btn" id="submitBtn" type="submit">Join the waitlist</button>
-          <span class="notice">Your info won’t be sent anywhere yet — this is a preview.</span>
+          <span class="notice">We'll only use this to email you about PlateSafe.</span>
         </div>
+        <p class="error-msg" id="errorMsg">Something went wrong sending that — please try again, or check your connection.</p>
       </form>
 
       <div class="success" id="success">
@@ -112,38 +123,58 @@
           <circle cx="12" cy="12" r="10" stroke-opacity=".25"></circle>
           <path d="M7 12.5l3 3 7-7"/>
         </svg>
-        <h2>Thanks — you’re on the list!</h2>
-        <p>We’ll email you when PlateSafe is ready in your area.</p>
+        <h2>Thanks — you're on the list!</h2>
+        <p>We'll email you when PlateSafe is ready in your area.</p>
         <p><a class="link" href="index.html">Return to homepage</a></p>
       </div>
     </div>
   </div>
 
   <script>
-    // Fake-submit: hide the form, show success, clear values
     const form = document.getElementById('f');
-    const card = document.getElementById('card');
     const success = document.getElementById('success');
     const btn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
 
-    form.addEventListener('submit', (e)=>{
+    function encode(data) {
+      return Object.keys(data)
+        .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+        .join("&");
+    }
+
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
+      errorMsg.classList.remove('show');
       btn.disabled = true;
       btn.textContent = 'Submitting…';
 
-      // simulate a short network delay
-      setTimeout(()=>{
-        // clear fields (not sent anywhere)
-        form.reset();
-        form.classList.add('fade-out');
+      const formData = new FormData(form);
+      const payload = {};
+      formData.forEach((value, key) => { payload[key] = value; });
 
-        setTimeout(()=>{
-          form.style.display = 'none';
-          success.classList.add('show');
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode(payload)
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error('Network response was not ok');
+
+          form.reset();
+          form.classList.add('fade-out');
+
+          setTimeout(() => {
+            form.style.display = 'none';
+            success.classList.add('show');
+            btn.disabled = false;
+            btn.textContent = 'Join the waitlist';
+          }, 300);
+        })
+        .catch(() => {
           btn.disabled = false;
           btn.textContent = 'Join the waitlist';
-        }, 300);
-      }, 800);
+          errorMsg.classList.add('show');
+        });
     });
   </script>
 </body>
