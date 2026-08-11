@@ -178,6 +178,32 @@
   .form-msg.show{ display:block; }
   .form-msg.ok{ color: var(--forest); }
 
+  /* SUCCESS TICK */
+  .success-state{
+    display:none;
+    flex-direction: column;
+    align-items:center;
+    gap: 12px;
+  }
+  .success-state.show{ display:flex; animation: successIn .4s ease both; }
+  @keyframes successIn{
+    0%{ opacity:0; transform: translateY(6px); }
+    100%{ opacity:1; transform: translateY(0); }
+  }
+  .signup-block{ transition: opacity .2s ease; }
+  .signup-block.hiding{ opacity:0; }
+  .tick-circle{ stroke-dasharray: 170; stroke-dashoffset: 170; }
+  .tick-check{ stroke-dasharray: 40; stroke-dashoffset: 40; }
+  .success-state.show .tick-circle{ animation: drawStroke .5s ease forwards .05s; }
+  .success-state.show .tick-check{ animation: drawStroke .35s ease forwards .5s; }
+  @keyframes drawStroke{ to{ stroke-dashoffset: 0; } }
+  .success-text strong{ display:block; font-family:'Fraunces', serif; font-size: 18px; color: var(--forest); font-weight:600; }
+  .success-text span{ font-size: 14px; color: rgba(22,36,31,0.62); }
+  @media (prefers-reduced-motion: reduce){
+    .success-state.show, .success-state.show .tick-circle, .success-state.show .tick-check{ animation: none; }
+    .tick-circle, .tick-check{ stroke-dashoffset: 0; }
+  }
+
   /* SEAL */
   .seal-wrap{
     display:flex; align-items:center; justify-content:center;
@@ -442,15 +468,27 @@
       <span class="eyebrow">Be first to know</span>
       <h2>Help shape a safer way to eat out.</h2>
       <p>Join the waitlist and we'll bring PlateSafe to your city as soon as we're ready to launch there.</p>
-      <form class="signup" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="waitlist">
-        <div class="field">
-          <input type="email" name="email" placeholder="you@email.com" required>
+      <div class="signup-block">
+        <form class="signup" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="waitlist">
+          <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+          <div class="field">
+            <input type="email" name="email" placeholder="you@email.com" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Join the waitlist</button>
+        </form>
+        <p class="microcopy">No spam. Just a heads-up when we launch in your area.</p>
+      </div>
+      <div class="success-state" aria-live="polite">
+        <svg class="tick-icon" viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="27" fill="none" stroke="var(--coral)" stroke-width="3" class="tick-circle"/>
+          <path d="M18 31l8 8 16-18" fill="none" stroke="var(--coral)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="tick-check"/>
+        </svg>
+        <div class="success-text">
+          <strong>You're on the list!</strong>
+          <span>We'll email you the moment PlateSafe opens up.</span>
         </div>
-        <button class="btn btn-primary" type="submit">Join the waitlist</button>
-      </form>
-      <p class="form-msg">You're on the list — we'll email you the moment PlateSafe opens up.</p>
-      <p class="microcopy">No spam. Just a heads-up when we launch in your area.</p>
+      </div>
     </div>
   </section>
 </main>
@@ -474,16 +512,47 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  function encodeForm(data) {
+    return Object.keys(data)
+      .map(function(key){ return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]); })
+      .join("&");
+  }
+
   document.querySelectorAll('form.signup').forEach(function(form){
     form.addEventListener('submit', function(e){
-      // Let Netlify handle the actual submission (native form POST).
-      // This just gives instant feedback in the UI.
-      var msg = form.parentElement.querySelector('.form-msg');
-      if (msg) {
-        setTimeout(function(){
-          msg.classList.add('show');
-        }, 50);
-      }
+      e.preventDefault();
+
+      var container = form.closest('.signup-block') || form.parentElement;
+      var successEl = container.parentElement.querySelector('.success-state');
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalLabel = submitBtn.textContent;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Joining…';
+
+      var formData = new FormData(form);
+      var payload = {};
+      formData.forEach(function(value, key){ payload[key] = value; });
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encodeForm(payload)
+      })
+        .then(function(response){
+          if (!response.ok) throw new Error('Network error');
+          form.reset();
+          container.classList.add('hiding');
+          setTimeout(function(){
+            container.style.display = 'none';
+            if (successEl) successEl.classList.add('show');
+          }, 200);
+        })
+        .catch(function(){
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+          alert('Something went wrong sending that — please try again.');
+        });
     });
   });
 </script>
