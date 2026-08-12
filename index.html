@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PlateSafe — Eat Confidently</title>
-<meta name="description" content="PlateSafe helps you find restaurants that take safety, food quality, and allergy awareness seriously.">
+<meta name="description" content="PlateSafe helps you find restaurants that take allergies, intolerances, dietary preferences, and food safety seriously.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --cream: #FAF6EE;
-    --cream-2: #F1E9D8;
-    --forest: #1F3B34;
-    --forest-2: #16241F;
-    --sage: #7E9884;
-    --sage-tint: #E4EAE1;
-    --coral: #E0603F;
+    --cream-2: #333560;
+    --forest: #4c4d7c;
+    --forest-2: #4c4d7c;
+    --sage: #6d6eaa;
+    --sage-tint: #fefefe;
+    --coral: #ac5c5c;
     --coral-dark: #C24C31;
     --line: rgba(22,36,31,0.12);
     --max: 1120px;
@@ -38,7 +38,7 @@
   .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 28px; }
 
   h1,h2,h3{
-    font-family: 'Fraunces', serif;
+    font-family: 'Times New Roman', Times, Georgia, serif;
     font-weight: 600;
     letter-spacing: -0.01em;
     margin: 0;
@@ -76,7 +76,7 @@
     padding-top: 18px; padding-bottom: 18px;
   }
   .logo{
-    font-family: 'Fraunces', serif;
+    font-family: 'Times New Roman', Times, Georgia, serif;
     font-weight: 600;
     font-size: 20px;
     color: var(--forest);
@@ -197,7 +197,7 @@
   .success-state.show .tick-circle{ animation: drawStroke .5s ease forwards .05s; }
   .success-state.show .tick-check{ animation: drawStroke .35s ease forwards .5s; }
   @keyframes drawStroke{ to{ stroke-dashoffset: 0; } }
-  .success-text strong{ display:block; font-family:'Fraunces', serif; font-size: 18px; color: var(--forest); font-weight:600; }
+  .success-text strong{ display:block; font-family:'Times New Roman', Times, Georgia, serif; font-size: 18px; color: var(--forest); font-weight:600; }
   .success-text span{ font-size: 14px; color: rgba(22,36,31,0.62); }
   @media (prefers-reduced-motion: reduce){
     .success-state.show, .success-state.show .tick-circle, .success-state.show .tick-check{ animation: none; }
@@ -206,8 +206,18 @@
 
   /* SEAL */
   .seal-wrap{
-    display:flex; align-items:center; justify-content:center;
+    display:flex; flex-direction: column; align-items:center; justify-content:center;
+    gap: 14px;
     position: relative;
+  }
+  .seal-slogan{
+    margin:0;
+    font-family: 'Times New Roman', Times, Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+    color: var(--forest);
+    text-align:center;
   }
   .seal{
     width: min(320px, 78vw);
@@ -220,7 +230,6 @@
     100%{ opacity:1; transform: scale(1) rotate(-6deg); }
   }
   .seal-brand-text{ font-family:'Inter'; font-weight:700; font-size: 15.5px; letter-spacing: 1.5px; }
-  .seal-slogan-text{ font-family:'Inter'; font-weight:600; font-size: 9.5px; letter-spacing: 1.3px; opacity: 0.85; }
 
   @media (prefers-reduced-motion: reduce){
     .seal{ animation: none; transform: rotate(-6deg); }
@@ -262,16 +271,17 @@
   .feature h3{
     font-size: 19px; margin-bottom: 8px;
     display:flex; align-items:center; gap:8px;
+    color: var(--cream);
   }
   .feature .farrow{
     font-family:'Inter', sans-serif;
     font-weight: 600;
     color: var(--coral);
-    opacity: .65;
+    opacity: .85;
     transition: transform .18s ease, opacity .18s ease;
     font-size: 16px;
   }
-  .feature p{ font-size: 14.8px; color: rgba(22,36,31,0.68); margin:0; }
+  .feature p{ font-size: 14.8px; color: rgba(250,246,238,0.72); margin:0; }
 
   /* HOW IT WORKS */
   .how{ background: var(--forest); border-radius: 28px; color: var(--cream); }
@@ -286,7 +296,7 @@
   }
   .step{ position: relative; padding-top: 8px; border-top: 1.5px solid rgba(250,246,238,0.22); }
   .step .num{
-    font-family:'Fraunces', serif;
+    font-family:'Times New Roman', Times, Georgia, serif;
     font-style: italic;
     font-size: 15px;
     color: var(--coral);
@@ -309,12 +319,12 @@
     padding: 36px 30px;
   }
   .why-stat .big{
-    font-family:'Fraunces', serif;
+    font-family:'Times New Roman', Times, Georgia, serif;
     font-size: 46px;
     color: var(--coral);
     line-height:1;
   }
-  .why-stat p{ margin-top: 12px; font-size: 14.5px; color: rgba(22,36,31,0.68); }
+  .why-stat p{ margin-top: 12px; font-size: 14.5px; color: rgba(250,246,238,0.72); }
   .why-copy p{ font-size: 16.5px; color: rgba(22,36,31,0.75); margin: 0 0 16px; }
   .why-copy p:last-child{ margin-bottom:0; }
 
@@ -338,6 +348,67 @@
   footer .flinks a:hover{ color: var(--forest); }
   footer .fcopy{ font-size: 13.5px; color: rgba(22,36,31,0.5); }
 
+  /* MODAL */
+  .modal-overlay{
+    position:fixed; inset:0;
+    background: rgba(22,24,45,0.55);
+    display:none; align-items:center; justify-content:center;
+    padding: 20px; z-index: 100;
+  }
+  .modal-overlay.show{ display:flex; animation: overlayIn .2s ease; }
+  @keyframes overlayIn{ from{ opacity:0; } to{ opacity:1; } }
+  .modal-panel{
+    background: var(--cream);
+    border-radius: 20px;
+    max-width: 440px; width:100%;
+    padding: 32px 30px 30px;
+    position: relative;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.4);
+    animation: panelIn .25s cubic-bezier(.2,.9,.25,1) both;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  @keyframes panelIn{ from{ opacity:0; transform: translateY(12px) scale(.98); } to{ opacity:1; transform: translateY(0) scale(1); } }
+  .modal-close{
+    position:absolute; top:16px; right:16px;
+    width:30px; height:30px; border-radius:50%;
+    border:none; background: var(--sage-tint); color: var(--forest);
+    font-size:18px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-close:hover{ background: var(--cream-2); color: var(--cream); }
+  .modal-body h3{ font-size: 22px; margin-top:10px; }
+  .modal-sub{ font-size: 14px; color: rgba(22,36,31,0.6); margin: 8px 0 22px; }
+  .modal-sub strong{ color: var(--forest); }
+  #modalForm{ display:flex; flex-direction:column; gap:14px; }
+  .modal-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .mfield{ display:flex; flex-direction:column; gap:6px; }
+  .mfield label{ font-size:12.5px; font-weight:600; color: var(--forest); }
+  .mfield input{
+    border:1.5px solid var(--line); border-radius:10px;
+    padding:11px 14px; font-family:'Inter'; font-size:14.5px;
+    background:#fff; color: var(--forest-2);
+  }
+  .mfield input:focus{ outline:none; border-color: var(--forest); }
+  .mcheck{
+    display:flex; align-items:flex-start; gap:9px;
+    font-size:13px; color: rgba(22,36,31,0.68);
+    margin-top:2px; cursor:pointer;
+  }
+  .mcheck input{ margin-top:3px; }
+  .mcheck a{ color: var(--forest); font-weight:600; text-decoration:underline; }
+  .modal-submit{ width:100%; margin-top:6px; }
+
+  .modal-success{ display:none; flex-direction:column; align-items:center; text-align:center; gap:10px; padding: 10px 0 0; }
+  .modal-success.show{ display:flex; animation: successIn .4s ease both; }
+  .modal-success h3{ font-size:20px; margin-top:4px; }
+  .modal-success p{ font-size:14px; color: rgba(22,36,31,0.68); margin:0; max-width: 320px; }
+  .modal-success .btn{ margin-top: 10px; }
+
+  @media (max-width: 480px){
+    .modal-row{ grid-template-columns: 1fr; }
+  }
+
   @media (max-width: 880px){
     .hero{ grid-template-columns: 1fr; padding-top: 44px; }
     .hero .seal-wrap{ order:-1; }
@@ -354,7 +425,7 @@
 <header>
   <nav class="wrap">
     <a class="logo" href="#top">
-      <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#1F3B34" stroke-width="1.6"/><path d="M7 12.5l3 3 7-7" stroke="#E0603F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#4c4d7c" stroke-width="1.6"/><path d="M7 12.5l3 3 7-7" stroke="#ac5c5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       PlateSafe
     </a>
     <a class="btn btn-ghost btn-sm" href="#signup2">Join the waitlist</a>
@@ -366,26 +437,23 @@
     <div>
       <span class="eyebrow">Launching soon</span>
       <h1>Know before you go — <em>who's actually keeping the kitchen safe.</em></h1>
-      <p class="lead">PlateSafe pairs verified hygiene checks with real diner reports on allergy handling and food quality, so you can pick a restaurant with confidence instead of guesswork.</p>
+      <p class="lead">PlateSafe pairs verified hygiene checks with real diner reports on allergies, intolerances, and dietary preferences — vegetarian, vegan, and everything in between — so you can pick a restaurant with confidence instead of guesswork.</p>
     </div>
 
     <div class="seal-wrap">
       <svg class="seal" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <path id="topArc" d="M 72,100 A 52,52 0 0 1 168,100"/>
-          <path id="bottomArc" d="M 68,148 A 58,58 0 0 0 172,148"/>
+          <path id="bottomArc" d="M 64,152 A 62,62 0 0 0 176,152"/>
         </defs>
         <circle cx="120" cy="120" r="112" fill="var(--cream-2)"/>
         <circle cx="120" cy="120" r="98" fill="none" stroke="var(--sage)" stroke-width="1.5" opacity="0.55"/>
         <circle cx="120" cy="120" r="78" fill="var(--forest)"/>
         <text class="seal-brand-text" fill="var(--cream)">
-          <textPath href="#topArc" startOffset="50%" text-anchor="middle">PLATESAFE</textPath>
+          <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">PLATESAFE</textPath>
         </text>
-        <text class="seal-slogan-text" fill="var(--cream)">
-          <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">SAFE TO EAT</textPath>
-        </text>
-        <path d="M92,120 L112,142 L152,96" stroke="var(--coral)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M72,120 L108,156 L172,84" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
       </svg>
+      <p class="seal-slogan">Don't risk it. Play it safe.</p>
     </div>
   </section>
 
@@ -398,10 +466,10 @@
     <div class="features">
       <a class="feature" href="allergies-preferences.html">
         <div class="ficon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4.5 6 4c2-.3 3.6.6 4.5 2 .9-1.4 2.5-2.3 4.5-2 3.5.5 5 4 3.5 8-2.5 4.5-6.5 9-6.5 9z" stroke="#FAF6EE" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 10l1.6 1.6L15 8" stroke="#E0603F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4.5 6 4c2-.3 3.6.6 4.5 2 .9-1.4 2.5-2.3 4.5-2 3.5.5 5 4 3.5 8-2.5 4.5-6.5 9-6.5 9z" stroke="#FAF6EE" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 10l1.6 1.6L15 8" stroke="#ac5c5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h3>Your allergies and preferences <span class="farrow">→</span></h3>
-        <p>Allergen handling, cross-contact risk, and menu transparency — flagged clearly, before you book a table, not after you're seated.</p>
+        <p>Allergies, intolerances, and dietary preferences — from nut allergies to vegetarian and vegan needs — flagged clearly, before you book a table, not after you're seated.</p>
       </a>
       <a class="feature" href="diner-reports.html">
         <div class="ficon">
@@ -415,7 +483,7 @@
           <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.6-3 8.4-7 9-4-.6-7-4.4-7-9V6l7-3z" stroke="#FAF6EE" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </div>
         <h3>Verified allergen compliance <span class="farrow">→</span></h3>
-        <p>Structured allergen compliance checks and public reporting, so you can see who's actually walking the talk — not just who has the best photos.</p>
+        <p>Structured allergen and dietary compliance checks and public reporting, so you can see who's actually walking the talk — not just who has the best photos.</p>
       </a>
     </div>
   </section>
@@ -431,7 +499,7 @@
           <div class="step">
             <span class="num">01</span>
             <h3>Search your area</h3>
-            <p>Filter by cuisine, and by the allergy or safety concerns that matter to your household.</p>
+            <p>Filter by cuisine, and by the allergies, intolerances, or dietary preferences that matter to your household.</p>
           </div>
           <div class="step">
             <span class="num">02</span>
@@ -457,7 +525,7 @@
       <div class="why-copy">
         <span class="eyebrow">Why we're building this</span>
         <h2 style="margin-top:14px; font-size: clamp(24px,3vw,32px);">Because "we can accommodate that" shouldn't be a guess.</h2>
-        <p>Right now, finding out whether a kitchen takes food safety seriously means calling ahead, hoping the server actually knows, and finding out for sure only after you've ordered.</p>
+        <p>Right now, finding out whether a kitchen takes allergies, intolerances, or dietary preferences seriously means calling ahead, hoping the server actually knows, and finding out for sure only after you've ordered.</p>
         <p>PlateSafe puts that information up front — verified, dated, and written in plain language — so eating out is one less thing to worry about.</p>
       </div>
     </div>
@@ -503,11 +571,65 @@
   </div>
 </footer>
 
-<!-- Hidden static form so Netlify's build bots detect this form at deploy time -->
+<!-- Hidden static form so Netlify's build bots detect the full field set at deploy time -->
 <form name="waitlist" data-netlify="true" netlify-honeypot="bot-field" hidden>
   <input type="email" name="email" />
+  <input name="first-name" />
+  <input name="last-name" />
+  <input name="dietary" />
+  <input type="checkbox" name="terms" />
   <input name="bot-field" />
 </form>
+
+<div class="modal-overlay" id="waitlistModal" aria-hidden="true">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" type="button" id="modalClose" aria-label="Close">&times;</button>
+
+    <div class="modal-body" id="modalBody">
+      <span class="eyebrow">Almost there</span>
+      <h3 id="modalTitle">Just a few more details</h3>
+      <p class="modal-sub">Signing up as <strong id="modalEmailDisplay"></strong></p>
+
+      <form id="modalForm" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="waitlist">
+        <input type="hidden" name="email" id="modalEmailField">
+        <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+        <div class="modal-row">
+          <div class="mfield">
+            <label for="mFirstName">First name</label>
+            <input id="mFirstName" name="first-name" required placeholder="Alex">
+          </div>
+          <div class="mfield">
+            <label for="mLastName">Last name</label>
+            <input id="mLastName" name="last-name" required placeholder="Smith">
+          </div>
+        </div>
+        <div class="mfield">
+          <label for="mDietary">Allergies, intolerances, or dietary preferences</label>
+          <input id="mDietary" name="dietary" placeholder="e.g. peanut allergy, vegetarian, gluten intolerance">
+        </div>
+
+        <label class="mcheck">
+          <input type="checkbox" name="terms" required>
+          <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+        </label>
+
+        <button class="btn btn-primary modal-submit" type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="modal-success" id="modalSuccess" aria-live="polite">
+      <svg class="tick-icon" viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="27" fill="none" stroke="var(--coral)" stroke-width="3" class="tick-circle"/>
+        <path d="M18 31l8 8 16-18" fill="none" stroke="var(--coral)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="tick-check"/>
+      </svg>
+      <h3>You're on the list!</h3>
+      <p>Thank you — the details you've shared are helping us build PlateSafe for the people who need it most.</p>
+      <button class="btn btn-ghost btn-sm" type="button" id="modalDoneBtn">Close</button>
+    </div>
+  </div>
+</div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -518,42 +640,88 @@
       .join("&");
   }
 
+  var modal = document.getElementById('waitlistModal');
+  var modalBody = document.getElementById('modalBody');
+  var modalSuccess = document.getElementById('modalSuccess');
+  var modalEmailField = document.getElementById('modalEmailField');
+  var modalEmailDisplay = document.getElementById('modalEmailDisplay');
+  var modalForm = document.getElementById('modalForm');
+  var modalClose = document.getElementById('modalClose');
+  var modalDoneBtn = document.getElementById('modalDoneBtn');
+
+  function openModal(email){
+    modalEmailField.value = email;
+    modalEmailDisplay.textContent = email;
+    modalBody.style.display = '';
+    modalSuccess.classList.remove('show');
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+    document.getElementById('mFirstName').focus();
+  }
+
+  function closeModal(){
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modalDoneBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){
+    if (e.target === modal) closeModal();
+  });
+
+  // Outer email field + button: opens the modal instead of submitting directly
   document.querySelectorAll('form.signup').forEach(function(form){
     form.addEventListener('submit', function(e){
       e.preventDefault();
-
-      var container = form.closest('.signup-block') || form.parentElement;
-      var successEl = container.parentElement.querySelector('.success-state');
-      var submitBtn = form.querySelector('button[type="submit"]');
-      var originalLabel = submitBtn.textContent;
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Joining…';
-
-      var formData = new FormData(form);
-      var payload = {};
-      formData.forEach(function(value, key){ payload[key] = value; });
-
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encodeForm(payload)
-      })
-        .then(function(response){
-          if (!response.ok) throw new Error('Network error');
-          form.reset();
-          container.classList.add('hiding');
-          setTimeout(function(){
-            container.style.display = 'none';
-            if (successEl) successEl.classList.add('show');
-          }, 200);
-        })
-        .catch(function(){
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalLabel;
-          alert('Something went wrong sending that — please try again.');
-        });
+      var emailInput = form.querySelector('input[type="email"]');
+      if (!emailInput || !emailInput.value) return;
+      openModal(emailInput.value);
     });
+  });
+
+  // Modal form: this is the one that actually submits to Netlify
+  modalForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var submitBtn = modalForm.querySelector('button[type="submit"]');
+    var originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    var formData = new FormData(modalForm);
+    var payload = {};
+    formData.forEach(function(value, key){ payload[key] = value; });
+    // checkboxes only appear in FormData when checked, so this is implicitly validated by 'required'
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encodeForm(payload)
+    })
+      .then(function(response){
+        if (!response.ok) throw new Error('Network error');
+        modalForm.reset();
+        modalBody.style.display = 'none';
+        modalSuccess.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+
+        // also reflect success on whichever outer form triggered this
+        document.querySelectorAll('.signup-block').forEach(function(block){
+          block.classList.add('hiding');
+          setTimeout(function(){
+            block.style.display = 'none';
+            var outerSuccess = block.parentElement.querySelector('.success-state');
+            if (outerSuccess) outerSuccess.classList.add('show');
+          }, 200);
+        });
+      })
+      .catch(function(){
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+        alert('Something went wrong sending that — please try again.');
+      });
   });
 </script>
 
